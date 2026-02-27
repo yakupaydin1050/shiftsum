@@ -23,4 +23,6 @@ if (explodingCells.size > 0) {
   console.log("Exploding cells:", explodingCells);
 }
 
+  console.log("NEW VERSION RUNNING");
+
 }
