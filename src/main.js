@@ -12,9 +12,14 @@ new InputController(handleMove);
 
 function handleMove(direction) {
   const moved = gridManager.moveEmpty(direction);
-
   if (!moved) return;
 
-  console.table(gridManager.grid);
   renderer.render(gridManager.grid);
+
+  const explosionEngine = new ExplosionEngine(gridManager.grid);
+  const explosions = explosionEngine.findExplosions();
+
+  if (explosions.length > 0) {
+    console.log("Explosions found:", explosions);
+  }
 }
