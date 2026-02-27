@@ -7,22 +7,29 @@ export class ExplosionEngine {
     this.visitedGlobal = new Set();
   }
 
-  findExplosions() {
-    const explosions = [];
+findExplosions() {
+  const explosions = [];
+  const uniqueGroups = new Set();
 
-    for (let row = 0; row < this.size; row++) {
-      for (let col = 0; col < this.size; col++) {
-        if (this.grid[row][col] !== null) {
-          const result = this.search(row, col);
-          if (result.length > 0) {
-            explosions.push(...result);
+  for (let row = 0; row < this.size; row++) {
+    for (let col = 0; col < this.size; col++) {
+      if (this.grid[row][col] !== null) {
+        const results = this.search(row, col);
+
+        results.forEach(group => {
+          const sorted = [...group].sort().join("|");
+
+          if (!uniqueGroups.has(sorted)) {
+            uniqueGroups.add(sorted);
+            explosions.push(group);
           }
-        }
+        });
       }
     }
-
-    return explosions;
   }
+
+  return explosions;
+}
 
   search(startRow, startCol) {
     const results = [];
