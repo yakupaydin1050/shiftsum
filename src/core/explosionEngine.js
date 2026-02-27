@@ -4,36 +4,23 @@ export class ExplosionEngine {
   constructor(grid) {
     this.grid = grid;
     this.size = grid.length;
-    this.visitedGlobal = new Set();
   }
 
-findExplosions() {
-  const explosions = [];
-  const uniqueGroups = new Set();
+  findExplodingCells() {
+    const explodingCells = new Set();
 
-  for (let row = 0; row < this.size; row++) {
-    for (let col = 0; col < this.size; col++) {
-      if (this.grid[row][col] !== null) {
-        const results = this.search(row, col);
-
-        results.forEach(group => {
-          const sorted = [...group].sort().join("|");
-
-          if (!uniqueGroups.has(sorted)) {
-            uniqueGroups.add(sorted);
-            explosions.push(group);
-          }
-        });
+    for (let row = 0; row < this.size; row++) {
+      for (let col = 0; col < this.size; col++) {
+        if (this.grid[row][col] !== null) {
+          this.search(row, col, explodingCells);
+        }
       }
     }
+
+    return explodingCells;
   }
 
-  return explosions;
-}
-
-  search(startRow, startCol) {
-    const results = [];
-
+  search(startRow, startCol, explodingCells) {
     const dfs = (row, col, path, sum) => {
       const key = `${row}-${col}`;
 
@@ -57,7 +44,8 @@ findExplosions() {
       newPath.add(key);
 
       if (newSum === 10 && newPath.size >= 2) {
-        results.push([...newPath]);
+        // 🎯 sadece hücreleri ekliyoruz
+        newPath.forEach(cell => explodingCells.add(cell));
         return;
       }
 
@@ -68,7 +56,5 @@ findExplosions() {
     };
 
     dfs(startRow, startCol, new Set(), 0);
-
-    return results;
   }
 }
