@@ -7,11 +7,13 @@ const renderer = new Renderer("game");
 
 renderer.render(gridManager.grid);
 
-new InputController((direction) => {
+new InputController(handleMove);
+
+function handleMove(direction) {
   const moved = gridManager.moveEmpty(direction);
 
-  if (moved) {
-    console.table(gridManager.grid); 
-    renderer.render(gridManager.grid);
-  }
-});
+  if (!moved) return;
+
+  console.table(gridManager.grid);
+  renderer.render(gridManager.grid);
+}
