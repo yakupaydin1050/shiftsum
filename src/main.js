@@ -9,7 +9,9 @@ renderer.render(gridManager.grid);
 
 new InputController((direction) => {
   const moved = gridManager.moveEmpty(direction);
+
   if (moved) {
+    console.table(gridManager.grid); 
     renderer.render(gridManager.grid);
   }
 });
