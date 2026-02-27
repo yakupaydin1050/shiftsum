@@ -1,3 +1,4 @@
+import { ExplosionEngine } from "./core/explosionEngine.js";
 import { GridManager } from "./core/gridManager.js";
 import { Renderer } from "./ui/renderer.js";
 import { InputController } from "./ui/inputController.js";
