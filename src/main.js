@@ -17,9 +17,10 @@ function handleMove(direction) {
   renderer.render(gridManager.grid);
 
   const explosionEngine = new ExplosionEngine(gridManager.grid);
-  const explosions = explosionEngine.findExplosions();
+  const explodingCells = explosionEngine.findExplodingCells();
 
-  if (explosions.length > 0) {
-    console.log("Explosions found:", explosions);
-  }
+if (explodingCells.size > 0) {
+  console.log("Exploding cells:", explodingCells);
+}
+
 }
